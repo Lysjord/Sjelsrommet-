@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #f8f9fa;
+  background: #f0f0f8;
 }
 
 .container {
@@ -10,70 +10,73 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
-  transition: background 2s ease;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2.6rem;
   margin-bottom: 1rem;
-  font-weight: bold;
-  color: #222;
 }
 
 .input {
-  padding: 0.5rem;
-  font-size: 1.1rem;
-  margin-top: 1rem;
-  width: 280px;
-  border: none;
+  display: block;
+  margin: 0.5rem auto;
+  padding: 0.6rem;
+  width: 90%;
+  max-width: 320px;
   border-radius: 10px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+textarea.input {
+  height: 80px;
+  resize: none;
 }
 
 .button {
   margin-top: 1rem;
   padding: 0.6rem 1.4rem;
   font-size: 1rem;
-  background: #333;
-  color: white;
+  background: #222;
+  color: #fff;
   border: none;
   border-radius: 10px;
   cursor: pointer;
 }
 
 .result-card {
-  margin-top: 2rem;
-  padding: 1.5rem;
   background: white;
+  padding: 1.5rem;
   border-radius: 16px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-  max-width: 380px;
+  max-width: 400px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  margin-top: 2rem;
 }
 
 .aura {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   margin: 0 auto 1rem;
   border-radius: 50%;
+  background: radial-gradient(circle, #a9e7f4, #f0f0f8);
   animation: pulse 4s infinite;
 }
 
-.message {
-  font-size: 1.4rem;
-  font-style: italic;
-  color: #333;
+.translation {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 1rem 0;
 }
 
-.translation {
-  font-size: 1rem;
-  margin-top: 0.5rem;
-  color: #666;
+.numerology {
+  font-size: 0.95rem;
+  color: #333;
+  font-style: italic;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.9; }
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
 }
