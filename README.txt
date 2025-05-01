@@ -1,0 +1,1 @@
+Denne ZIP-en er klar for dynamisk fargevalg og numerologi-integrasjon.
