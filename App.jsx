@@ -16,38 +16,40 @@ export default function App() {
 
   return (
     <div className="container">
-      <h1>SOUL MIRROR V3</h1>
+      <h1>SOUL MIRROR</h1>
       {!submitted ? (
-        <>
-          <p>What do you feel inside when you sit in silence?</p>
+        <div className="form">
+          <h2>1. What do you feel in stillness?</h2>
           <textarea
             className="input"
             value={feeling}
             onChange={(e) => setFeeling(e.target.value)}
-            placeholder="Write your inner feeling..."
+            placeholder="Describe your inner feeling..."
           />
+          <h2>2. Who are you?</h2>
           <input
             className="input"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
+            placeholder="Your full name"
             type="text"
           />
           <input
             className="input"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
-            placeholder="Date of birth (YYYY-MM-DD)"
+            placeholder="Date of birth"
             type="date"
           />
+          <h2>3. What would you like to receive?</h2>
           <select className="input" value={scope} onChange={(e) => setScope(e.target.value)}>
-            <option value="day">Today</option>
-            <option value="week">This week</option>
-            <option value="month">This month</option>
-            <option value="year">This year</option>
+            <option value="day">Today's Insight</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
           </select>
-          <button className="button" onClick={handleSubmit}>Reveal Soul Mirror</button>
-        </>
+          <button className="button" onClick={handleSubmit}>Reveal My Soul Mirror</button>
+        </div>
       ) : (
         <div className="result-card">
           <div className="aura"></div>
