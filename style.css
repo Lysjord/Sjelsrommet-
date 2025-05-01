@@ -1,14 +1,15 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-  background-attachment: fixed;
+  background: url('https://images.unsplash.com/photo-1549887534-4efb1997f2a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80') no-repeat center center fixed;
+  background-size: cover;
   color: #fff;
 }
 
 .container {
   min-height: 100vh;
   padding: 2rem;
+  background: rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,7 +17,7 @@ body {
 }
 
 h1 {
-  font-size: 2.8rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
   letter-spacing: 1px;
 }
@@ -24,6 +25,13 @@ h1 {
 h2 {
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
+}
+
+.label {
+  display: block;
+  margin-top: 0.8rem;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
 }
 
 .input {
@@ -55,38 +63,57 @@ textarea.input {
 }
 
 .result-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.6);
   padding: 1.5rem;
-  border-radius: 16px;
-  max-width: 400px;
+  border-radius: 20px;
+  max-width: 440px;
   margin-top: 2rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
 }
 
-.aura {
-  width: 120px;
-  height: 120px;
+.frame {
+  padding: 1rem;
+  border: 4px double #fff;
+  border-radius: 16px;
+  background: radial-gradient(circle, #b1d0ff, #1a1a2e);
+}
+
+.aura-glow {
+  width: 100px;
+  height: 100px;
   margin: 0 auto 1rem;
   border-radius: 50%;
-  background: radial-gradient(circle, #8ec5fc, #e0c3fc);
-  animation: pulse 4s infinite;
+  background: radial-gradient(circle, #f0e6ff, #7f7fd5);
+  animation: pulse 5s infinite;
+}
+
+.symbol {
+  font-size: 2rem;
+  margin: 1rem 0;
+  color: #f9f9f9;
+}
+
+.message {
+  font-size: 1.3rem;
+  font-style: italic;
 }
 
 .translation {
-  font-size: 1.1rem;
-  color: #dcdcdc;
-  margin: 1rem 0;
+  font-size: 1rem;
+  margin: 1rem 0 0.5rem;
+  color: #eeeeee;
 }
 
 .numerology {
   font-size: 0.95rem;
-  color: #eee;
-  font-style: italic;
+  color: #dddddd;
+  margin-top: 0.5rem;
+  line-height: 1.4;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.8; }
+  0% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.85; }
 }

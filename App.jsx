@@ -34,11 +34,11 @@ export default function App() {
             placeholder="Your full name"
             type="text"
           />
+          <label className="label">Date of Birth</label>
           <input
             className="input"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
-            placeholder="Date of birth"
             type="date"
           />
           <h2>3. What would you like to receive?</h2>
@@ -51,15 +51,27 @@ export default function App() {
           <button className="button" onClick={handleSubmit}>Reveal My Soul Mirror</button>
         </div>
       ) : (
-        <div className="result-card">
-          <div className="aura"></div>
-          <h2>∴ Ka'loren thaya'mir ∴</h2>
-          <p className="translation">You are becoming light in stillness.</p>
-          <p className="numerology">
-            {name}, your {scope} message: Your soul is moving through a portal of transformation.
-            Align with your inner rhythm. Your birth path reflects strength and insight.
-          </p>
-          <button className="button" onClick={() => window.location.reload()}>Try Again</button>
+        <div className="result-card" id="result">
+          <div className="frame">
+            <div className="aura-glow"></div>
+            <div className="symbol">✶</div>
+            <div className="message">∴ Ka'loren thaya'mir ∴</div>
+            <div className="translation">You are becoming light in stillness.</div>
+            <div className="numerology">
+              {name}, your {scope} message:<br />
+              Your soul is moving through a portal of transformation.<br />
+              Align with your inner rhythm.<br />
+              Your birth path reflects strength and insight.
+            </div>
+          </div>
+          <button className="button" onClick={() => {
+            html2canvas(document.getElementById("result")).then(canvas => {
+              const link = document.createElement("a");
+              link.download = "soul-mirror.png";
+              link.href = canvas.toDataURL();
+              link.click();
+            });
+          }}>Download My Soul Mirror</button>
         </div>
       )}
     </div>
