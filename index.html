@@ -1,1 +1,155 @@
-<!-- Full Soul Mirror HTML-app kommer her. Se README for detaljer. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Soul Mirror V3 – Complete</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    .input-section {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-size: 1.1rem;
+    }
+    input, textarea, select {
+      width: 90%%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      margin-top: 1rem;
+      cursor: pointer;
+      background: #ffffff;
+      color: #000;
+    }
+    .result {
+      background: white;
+      color: black;
+      padding: 2rem;
+      border-radius: 30px;
+      margin: 2rem auto;
+      width: 340px;
+      box-shadow: 0 0 20px gold;
+      position: relative;
+    }
+    .symbol {
+      font-size: 2.5rem;
+      margin: 1rem 0;
+    }
+    .aura {
+      width: 100px;
+      height: 100px;
+      margin: 1rem auto;
+      border-radius: 50%%;
+      background: radial-gradient(circle, #b39ddb, #4527a0);
+    }
+  </style>
+</head>
+<body>
+  <div class="input-section">
+    <h1>Soul Mirror</h1>
+    <label for="feeling">What do you feel in silence?</label>
+    <textarea id="feeling" rows="3"></textarea>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" />
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" />
+    <label for="scope">Period</label>
+    <select id="scope">
+      <option value="day">Today</option>
+      <option value="week">This Week</option>
+      <option value="month">This Month</option>
+      <option value="year">This Year</option>
+    </select>
+    <button onclick="generate()">Reveal My Soul Mirror</button>
+  </div>
+
+  <div id="result"></div>
+
+  <script>
+    function getChakraColor(text) {
+      const t = text.toLowerCase();
+      if (t.includes("safe") || t.includes("ground")) return "#ff7043";
+      if (t.includes("create") || t.includes("flow")) return "#f06292";
+      if (t.includes("power") || t.includes("strength")) return "#fff176";
+      if (t.includes("love") || t.includes("heart")) return "#aed581";
+      if (t.includes("truth") || t.includes("speak")) return "#4fc3f7";
+      if (t.includes("see") || t.includes("vision")) return "#9575cd";
+      if (t.includes("light") || t.includes("spirit")) return "#ce93d8";
+      return "#90caf9";
+    }
+
+    function calculateLifePath(dob) {
+      const digits = dob.replace(/[^0-9]/g, '').split('').map(Number);
+      let sum = digits.reduce((a, b) => a + b, 0);
+      while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+        sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
+      }
+      return sum;
+    }
+
+    function generate() {
+      const name = document.getElementById('name').value.trim();
+      const dob = document.getElementById('dob').value;
+      const feeling = document.getElementById('feeling').value.trim();
+      const scope = document.getElementById('scope').value;
+
+      if (!name || !dob || !feeling) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      const pathNumber = calculateLifePath(dob);
+      const color = getChakraColor(feeling);
+
+      const result = document.createElement('div');
+      result.className = 'result';
+      result.id = 'card-result';
+      result.innerHTML = `
+        <div class='aura' style="background:${color}"></div>
+        <div class='symbol'>✶</div>
+        <p><strong>∴ Sha’vala oren’kai ∴</strong></p>
+        <p><em>You are awakening light through truth.</em></p>
+        <p>${name}, your ${scope} number is ${pathNumber}, a path of clarity and remembrance.</p>
+        <button onclick="download()">Download Soul Mirror</button>
+      `;
+      document.getElementById("result").innerHTML = '';
+      document.getElementById("result").appendChild(result);
+    }
+
+    function download() {
+      html2canvas(document.getElementById("card-result")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "soul-mirror.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
