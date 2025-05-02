@@ -1,86 +1,67 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./style.css";
 
-const chakraColors = {
-  healing: "hsl(120, 60%, 70%)",
-  awakening: "hsl(280, 70%, 75%)",
-  confidence: "hsl(45, 100%, 65%)",
-  purpose: "hsl(200, 85%, 70%)"
-};
 
-const messages = {
-  healing: {
-    star: "∴ Elenya shan'tu viorel ∴",
-    trans: "You are the breath that restores all forgotten parts."
-  },
-  awakening: {
-    star: "∴ Eshara'tin velya-no ∴",
-    trans: "You are awakening from the ancient light within."
-  },
-  confidence: {
-    star: "∴ Karan'del osa ∴",
-    trans: "You are strength remembering itself."
-  },
-  purpose: {
-    star: "∴ Tha'mor en vela kai ∴",
-    trans: "You are walking exactly where your soul asked to go."
-  }
-};
-
-function interpretInput(txt) {
-  const lower = txt.toLowerCase();
-  if (lower.includes("heal") || lower.includes("peace") || lower.includes("rest")) return "healing";
-  if (lower.includes("wake") || lower.includes("remember") || lower.includes("light")) return "awakening";
-  if (lower.includes("strength") || lower.includes("power") || lower.includes("confident")) return "confidence";
-  if (lower.includes("path") || lower.includes("life") || lower.includes("purpose")) return "purpose";
-  return "healing";
+function getColorFromEnergy(text) {
+  const lower = text.toLowerCase();
+  if (lower.includes("kraft") || lower.includes("trygg") || lower.includes("jord")) return "rot";
+  if (lower.includes("glede") || lower.includes("flyt") || lower.includes("følelse")) return "sakral";
+  if (lower.includes("vilje") || lower.includes("mot") || lower.includes("handling")) return "solar";
+  if (lower.includes("kjærlighet") || lower.includes("fred") || lower.includes("balanse")) return "hjerte";
+  if (lower.includes("uttrykk") || lower.includes("sannhet") || lower.includes("tale")) return "hals";
+  if (lower.includes("visjon") || lower.includes("se") || lower.includes("intuisjon")) return "panne";
+  if (lower.includes("lys") || lower.includes("ånd") || lower.includes("enhet")) return "krone";
+  return "hjerte";
 }
 
+const chakraColors = {
+  rot: "hsl(0, 70%, 50%)",
+  sakral: "hsl(30, 80%, 55%)",
+  solar: "hsl(50, 90%, 60%)",
+  hjerte: "hsl(120, 40%, 55%)",
+  hals: "hsl(200, 50%, 60%)",
+  panne: "hsl(250, 60%, 65%)",
+  krone: "hsl(280, 60%, 80%)"
+};
+
+
+const messages = [
+  "∴ Naya'tel uroma kea-shen ∴",
+  "∴ Ish-tal en'Shara moran ∴",
+  "∴ Elyu'mar setha ∴",
+  "∴ Ka'lon triya ∴",
+  "∴ Velen-tu, oren-ia ∴"
+];
+
 export default function Sjelspeil() {
-  const [text, setText] = useState("");
-  const [show, setShow] = useState(false);
-  const [type, setType] = useState("healing");
-  const auraRef = useRef();
+  const [inputText, setInputText] = useState("");
+  const [showResult, setShowResult] = useState(false);
+  const [message, setMessage] = useState("");
 
   function handleReveal() {
-    const t = interpretInput(text);
-    setType(t);
-    setShow(true);
-    const audio = document.getElementById("sound");
-    audio.src = `${t}.mp3`;
-    audio.play();
+    setShowResult(true);
+    setMessage(messages[Math.floor(Math.random() * messages.length)]);
   }
 
-  function downloadImage() {
-    html2canvas(document.querySelector(".result-card")).then(canvas => {
-      const link = document.createElement("a");
-      link.download = "sjelspeil.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  }
-
-  const color = chakraColors[type];
-  const msg = messages[type];
+  const energy = getColorFromEnergy(inputText);
+  const color = chakraColors[energy];
 
   return (
-    <div className="container" style={{ background: `radial-gradient(circle, ${color}, #ffffff)` }}>
+    <div className="container" style={ background: `radial-gradient(circle, ${color}, #ffffff)` }>
       <h1>SJELSPEIL</h1>
-      <p>Write from your soul. Receive light in return.</p>
+      <p>Skriv et ord, en følelse, eller et kall – og se hvordan sjelen din taler tilbake.</p>
       <input
         className="input"
-        placeholder="Type a feeling, word or message..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        placeholder="Skriv fra hjertet..."
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
       />
-      <button className="button" onClick={handleReveal}>Reveal</button>
+      <button className="button" onClick={handleReveal}>Se mitt sjelspeil</button>
 
-      {show && (
+      {showResult && (
         <div className="result-card">
-          <div ref={auraRef} className="aura" style={{ backgroundColor: color }}></div>
-          <p className="message">{msg.star}</p>
-          <p className="translation">{msg.trans}</p>
-          <button className="button" onClick={downloadImage}>Download Sjelspeil</button>
+          <div className="aura" style={ backgroundColor: color }></div>
+          <p className="message">"{message}"</p>
         </div>
       )}
     </div>
