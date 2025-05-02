@@ -2,10 +2,35 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
-  <title>Sjelspeil</title>
+  <title>Sjelsrommet</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Velkommen til Sjelspeil</h1>
-  <p>Dette er en komplett og spirituell versjon av appen med chakrafarge, numerologi, stjernespråk og nedlastbart bilde.</p>
+  <div id="app">
+    <h1>Sjelspeil</h1>
+    <form id="soulForm">
+      <label>Hva føler du i stillhet?<br><input type="text" name="feeling" required></label><br>
+      <label>Fullt navn:<br><input type="text" name="name" required></label><br>
+      <label>Fødselsdato:<br><input type="date" name="birthdate" required></label><br>
+      <label>Velg periode:<br>
+        <select name="period">
+          <option value="day">Dag</option>
+          <option value="week">Uke</option>
+          <option value="month">Måned</option>
+          <option value="year">År</option>
+        </select>
+      </label><br>
+      <button type="button" id="revealButton">Vis mitt sjelspeil</button>
+    </form>
+    <div id="result-card" style="display:none;">
+      <p id="star-message"></p>
+      <p id="translation"></p>
+      <div id="symbol-container"><span id="symbol"></span></div>
+      <p id="numerology-message"></p>
+      <button id="downloadBtn">Last ned som bilde</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
