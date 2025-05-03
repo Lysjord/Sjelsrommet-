@@ -1,7 +1,7 @@
 body {
-  background: #000;
+  background: linear-gradient(#000428, #004e92);
+  font-family: 'Georgia', serif;
   color: #fff;
-  font-family: sans-serif;
   text-align: center;
   padding: 2rem;
 }
@@ -12,8 +12,18 @@ form {
   margin-bottom: 2rem;
 }
 #result-card {
+  background: #1a1a2e;
   border: 2px solid gold;
   padding: 1rem;
-  border-radius: 10px;
-  background: #111;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+}
+#symbol-container {
+  margin: 1rem 0;
+}
+#symbol {
+  font-size: 3rem;
+  color: gold;
 }
