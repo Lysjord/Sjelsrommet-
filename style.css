@@ -1,29 +1,31 @@
 body {
-  background: linear-gradient(#000428, #004e92);
+  background: url('https://images.unsplash.com/photo-1601297183304-03df90fd5e4f?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+  background-size: cover;
   font-family: 'Georgia', serif;
   color: #fff;
   text-align: center;
   padding: 2rem;
 }
 form {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.6);
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 2rem;
 }
 #result-card {
-  background: #1a1a2e;
-  border: 2px solid gold;
-  padding: 1rem;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  margin: auto;
+  display: flex;
+  justify-content: center;
 }
-#symbol-container {
-  margin: 1rem 0;
+.result-frame {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid gold;
+  padding: 1.5rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 450px;
 }
 #symbol {
   font-size: 3rem;
   color: gold;
+  margin: 1rem 0;
 }
