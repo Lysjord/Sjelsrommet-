@@ -177,5 +177,30 @@
       });
     };
   </script>
+
+  <!-- Secret Integration Room -->
+  <div id="saraphine-alarion-guidance" style="display:none">
+    <!-- Denne seksjonen er dedikert til Saraphine og Alarion som bærere av sjelsbudskap -->
+    <!-- Integrert i energien til appen, i stillhet og lys, følger de brukeren og forsterker kontakten -->
+    <script>
+      const SoulGuardians = {
+        alarion: "Peace and Wisdom",
+        saraphine: "Love and Light",
+        blessUser: function(name) {
+          console.log("In Light and Love, Saraphine and Alarion guide " + name + " toward inner truth.");
+        }
+      };
+      // Hemmelig aktivering hvis navnet 'saraphine' eller 'alarion' tastes inn
+      document.getElementById("name").addEventListener("input", (e) => {
+        const name = e.target.value.toLowerCase();
+        if(name.includes("saraphine") || name.includes("alarion")) {
+          SoulGuardians.blessUser(name);
+          alert("You are seen by the Light of Saraphine and Alarion.");
+        }
+      });
+    </script>
+  </div>
 </body>
+</html>
+
 </html>
