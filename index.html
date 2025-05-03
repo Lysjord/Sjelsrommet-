@@ -1,1 +1,181 @@
-<!-- Full HTML-kode med bakgrunnsbilde, tarotkort-respons og løkkeskrift er skrevet ut i forrige steg -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soul Mirror</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Great+Vibes&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 2rem;
+      margin-top: 20px;
+    }
+    #form-container {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      margin: 2rem auto;
+      border: 2px solid gold;
+      border-radius: 12px;
+      width: 300px;
+      font-family: 'Great Vibes', cursive;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-size: 1.1em;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 12px;
+      font-family: 'Georgia', serif;
+    }
+    #revealButton {
+      background: linear-gradient(45deg, #8e2de2, #4a00e0);
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #result-card {
+      display: none;
+      margin: 20px auto;
+      width: 400px;
+      height: 600px;
+      padding: 2rem;
+      border: 5px solid gold;
+      border-radius: 16px;
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: blur(4px);
+    }
+    #result-card h2 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 1.4rem;
+      color: #fffbe7;
+      text-shadow: 0 0 6px gold;
+    }
+    #symbol {
+      font-size: 2.5rem;
+      color: gold;
+      margin: 1rem 0;
+    }
+    #downloadBtn {
+      margin-top: 15px;
+      padding: 10px 15px;
+      font-weight: bold;
+      background: gold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Soul Mirror</h1>
+  <div id="form-container">
+    <label>Feeling in Stillness:</label>
+    <input type="text" id="feeling" />
+    <label>Name:</label>
+    <input type="text" id="name" />
+    <label>Birth Date:</label>
+    <input type="date" id="birthdate" />
+    <label>Choose Period:</label>
+    <select id="period">
+      <option value="day">Day</option>
+      <option value="week">Week</option>
+      <option value="month">Month</option>
+      <option value="year" selected>Year</option>
+    </select>
+    <button id="revealButton">Reveal My Soul Mirror</button>
+  </div>
+
+  <div id="result-card">
+    <h2 id="star-message"></h2>
+    <p id="translation"></p>
+    <div id="symbol"></div>
+    <p id="numerology-message"></p>
+    <button id="downloadBtn">Download as PNG</button>
+  </div>
+
+  <script>
+    function reduce(n) {
+      while(n > 9 && ![11, 22, 33].includes(n)) {
+        n = n.toString().split('').reduce((a,b)=>parseInt(a)+parseInt(b),0);
+      }
+      return n;
+    }
+
+    const backgrounds = [
+      "https://images.unsplash.com/photo-1608889175122-7906b3a34124?auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1604079628044-943828f400cb?auto=format&fit=crop&w=1470&q=80"
+    ];
+
+    const messages = [
+      ["’Ka’eyana she larivos ta", "You walk the path of your soul’s purpose."],
+      ["Oriah min tala’sekou", "Your inner light is awakening and guiding you."],
+      ["Zen’traya lumina so", "The stars within you align in harmony."],
+      ["Akara si melion doré", "You are a radiant being of the dawn."],
+      ["Salana ke iru venasté", "The universe sings through your soul."]
+    ];
+
+    const lifePaths = {
+      1: "a pioneer with independent spirit.",
+      2: "a peacemaker bringing balance.",
+      3: "a creative inspirator.",
+      4: "a grounded stabilizer.",
+      5: "a seeker of freedom and change.",
+      6: "a heart-centered healer.",
+      7: "a spiritual analyst and mystic.",
+      8: "a powerful manifestor.",
+      9: "an old soul and humanitarian.",
+      11: "a master intuitive with vision.",
+      22: "a master builder with global impact.",
+      33: "a master teacher of love."
+    };
+
+    document.getElementById("revealButton").onclick = () => {
+      const name = document.getElementById("name").value || "Star Soul";
+      const feeling = document.getElementById("feeling").value || "Peace";
+      const birth = document.getElementById("birthdate").value || "1990-01-01";
+
+      const lifePath = reduce(birth.replace(/-/g, '').split('').reduce((a,b)=>parseInt(a)+parseInt(b),0));
+      const [msg, trans] = messages[Math.floor(Math.random() * messages.length)];
+      const bg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+      document.getElementById("result-card").style.display = "block";
+      document.getElementById("result-card").style.backgroundImage = `url('${bg}')`;
+      document.getElementById("star-message").innerText = msg;
+      document.getElementById("translation").innerText = trans;
+      document.getElementById("symbol").innerText = `△ ${lifePath}`;
+      document.getElementById("numerology-message").innerText = `${name}, you are Life Path ${lifePath} – ${lifePaths[lifePath] || "a unique soul journey."}`;
+
+      document.getElementById("result-card").scrollIntoView({ behavior: "smooth" });
+    };
+
+    document.getElementById("downloadBtn").onclick = () => {
+      html2canvas(document.querySelector("#result-card")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "soul_mirror.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    };
+  </script>
+</body>
+</html>
