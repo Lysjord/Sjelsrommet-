@@ -1,18 +1,14 @@
 document.getElementById('revealButton').onclick = function() {
-  let name = document.getElementById('name').value.trim();
-  let feeling = document.getElementById('feeling').value.trim();
-  let birthdate = document.getElementById('birthdate').value.trim();
-
-  if (!name) name = "Stjernelys";
-  if (!feeling) feeling = "Fred og varme";
-  if (!birthdate) birthdate = "1990-01-01";
+  let name = document.getElementById('name').value.trim() || "Stjernelys";
+  let feeling = document.getElementById('feeling').value.trim() || "Stillhet og lys";
+  let birthdate = document.getElementById('birthdate').value.trim() || "1990-01-01";
 
   let livsvei = calculateLifePath(birthdate);
   let symbol = '▲ ' + livsvei;
   let message = 'Du bærer livsvei ' + livsvei + ' – en vei av ' + lifePathMeaning(livsvei);
 
   document.getElementById('star-message').innerText = '∴ Eshara'tin velya-no ∴';
-  document.getElementById('translation').innerText = 'Du våkner fra det eldgamle lyset i deg.';
+  document.getElementById('translation').innerText = 'You are awakening from the ancient light within.';
   document.getElementById('symbol').innerText = symbol;
   document.getElementById('numerology-message').innerText = name + ', ' + message;
   document.getElementById('result-container').style.display = 'block';
