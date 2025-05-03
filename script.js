@@ -1,6 +1,11 @@
 document.getElementById('revealButton').onclick = function() {
-  const name = document.querySelector('input[name="name"]').value.trim();
-  const birthdate = document.querySelector('input[name="birthdate"]').value;
+  let name = document.getElementById('name').value.trim();
+  let feeling = document.getElementById('feeling').value.trim();
+  let birthdate = document.getElementById('birthdate').value.trim();
+
+  if (!name) name = "Stjernelys";
+  if (!feeling) feeling = "Fred og varme";
+  if (!birthdate) birthdate = "1990-01-01";
 
   let livsvei = calculateLifePath(birthdate);
   let symbol = '▲ ' + livsvei;
