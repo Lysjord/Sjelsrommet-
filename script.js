@@ -2,10 +2,9 @@ document.getElementById('revealButton').onclick = function() {
   const name = document.querySelector('input[name="name"]').value.trim();
   const feeling = document.querySelector('input[name="feeling"]').value.trim();
   const birthdate = document.querySelector('input[name="birthdate"]').value;
-  const period = document.querySelector('select[name="period"]').value;
 
   let livsvei = calculateLifePath(birthdate);
-  let symbol = '△ ' + livsvei;
+  let symbol = '▲ ' + livsvei;
   let message = 'Du bærer livsvei ' + livsvei + ' – en vei av ' + lifePathMeaning(livsvei);
 
   document.getElementById('star-message').innerText = '∴ Eshara'tin velya-no ∴';

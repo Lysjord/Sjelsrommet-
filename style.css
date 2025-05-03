@@ -1,5 +1,5 @@
 body {
-  background: url('https://images.unsplash.com/photo-1601297183304-03df90fd5e4f?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Georgia', serif;
   color: #fff;
@@ -17,10 +17,10 @@ form {
   justify-content: center;
 }
 .result-frame {
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid gold;
+  background: url('https://images.unsplash.com/photo-1608889175122-7906b3a34124?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+  border: 3px solid gold;
   padding: 1.5rem;
-  border-radius: 15px;
+  border-radius: 16px;
   width: 90%;
   max-width: 450px;
 }
