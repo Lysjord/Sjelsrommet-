@@ -2,145 +2,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soul Mirror</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Great+Vibes&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Soul Mirror – AI Connected</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Georgia', serif;
-      background: radial-gradient(circle at top center, #1a0033, #000);
+      background: #000;
       color: white;
+      font-family: Georgia, serif;
       text-align: center;
+      padding: 2em;
     }
-
-    h1 {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 2rem;
-      margin-top: 20px;
-    }
-
-    #form-container {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      margin: 2rem auto;
-      border: 2px solid gold;
-      border-radius: 12px;
-      width: 300px;
-      font-family: 'Great Vibes', cursive;
-    }
-
     input, select, button {
-      width: 100%;
+      margin: 10px;
       padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: none;
+      font-size: 1em;
     }
-
-    #result-card {
+    #soul-card {
       display: none;
-      margin: 40px auto;
-      padding: 30px;
-      width: 90%;
-      max-width: 420px;
-      background: linear-gradient(145deg, #2e004f, #1a0033);
+      margin: 2em auto;
+      padding: 1em;
       border: 6px solid gold;
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255,255,255,0.6), 0 0 40px #ffcc00 inset;
-      color: #fff;
-      font-family: 'Georgia', serif;
-    }
-
-    #result-card h2 {
-      font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.6em;
-      color: #ffd700;
-      margin-bottom: 10px;
-    }
-
-    #symbol {
-      font-size: 2.5rem;
-      color: #ffcc66;
-      margin: 10px 0;
-    }
-
-    #numerology-message {
-      font-size: 1em;
-      line-height: 1.4em;
-      color: #eee;
-      margin-top: 15px;
-    }
-
-    #downloadBtn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: gold;
-      color: black;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+      max-width: 400px;
+      background: #111 url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=420&q=80') no-repeat center center;
+      background-size: cover;
+      box-shadow: 0 0 20px gold;
     }
   </style>
 </head>
 <body>
   <h1>Soul Mirror</h1>
-  <div id="form-container">
-    <label>Feeling in Stillness:</label>
-    <input type="text" id="feeling" />
-    <label>Name:</label>
-    <input type="text" id="name" />
-    <label>Birth Date:</label>
-    <input type="date" id="birthdate" />
-    <label>Choose Period:</label>
-    <select id="period">
-      <option value="day">Day</option>
-      <option value="week">Week</option>
-      <option value="month">Month</option>
-      <option value="year">Year</option>
-    </select>
-    <button onclick="revealSoulMirror()">Reveal My Soul Mirror</button>
-  </div>
+  <input type="text" id="name" placeholder="Name" />
+  <input type="text" id="feeling" placeholder="Feeling in stillness" />
+  <input type="date" id="birthdate" />
+  <button onclick="fetchAISoulReading()">Reveal My Soul Mirror</button>
 
-  <div id="result-card">
-    <h2 id="star-message"></h2>
-    <p id="translation"></p>
-    <div id="symbol"></div>
-    <p id="numerology-message"></p>
-    <button id="downloadBtn" onclick="downloadCard()">Download as PNG</button>
+  <div id="soul-card">
+    <h2 id="card-name"></h2>
+    <p id="card-feeling"></p>
+    <p id="card-star"></p>
+    <p id="card-translation" style="font-style: italic;"></p>
+    <p id="card-numerology" style="margin-top: 1em;"></p>
   </div>
 
   <script>
-    async function revealSoulMirror() {
-      const name = document.getElementById('name').value;
-      const feeling = document.getElementById('feeling').value;
-      const birthdate = document.getElementById('birthdate').value;
-      const period = document.getElementById('period').value;
+    async function fetchAISoulReading() {
+      const name = document.getElementById("name").value;
+      const feeling = document.getElementById("feeling").value;
+      const birthdate = document.getElementById("birthdate").value;
 
-      const response = await fetch('/api/generateMessage', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, feeling, birthdate, period })
+      if (!name || !feeling || !birthdate) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer YOUR_API_KEY" // <-- SETT INN API-NØKKEL HER
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a spiritual AI guide. Respond in poetic, mystical tone. Return a star message, a translation in English, and a numerology-based insight."
+            },
+            {
+              role: "user",
+              content: `Name: ${name}, Feeling: ${feeling}, Birthdate: ${birthdate}. Give me a soul mirror message.`
+            }
+          ]
+        })
       });
+
       const data = await response.json();
+      const reply = data.choices[0].message.content;
 
-      document.getElementById('star-message').innerText = data.starMessage;
-      document.getElementById('translation').innerText = data.translation;
-      document.getElementById('symbol').innerText = data.symbol;
-      document.getElementById('numerology-message').innerText = data.numerology;
-      document.getElementById('result-card').style.display = 'block';
-      document.getElementById('result-card').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function downloadCard() {
-      html2canvas(document.querySelector("#result-card")).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'soul_mirror.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      });
+      document.getElementById("card-name").innerText = name;
+      document.getElementById("card-feeling").innerText = "You feel: " + feeling;
+      document.getElementById("card-star").innerText = reply.split("Translation:")[0].trim();
+      document.getElementById("card-translation").innerText = reply.split("Translation:")[1]?.split("Numerology:")[0]?.trim() || "";
+      document.getElementById("card-numerology").innerText = reply.split("Numerology:")[1]?.trim() || "";
+      document.getElementById("soul-card").style.display = "block";
     }
   </script>
 </body>
