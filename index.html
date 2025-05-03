@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Soul Mirror</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Great+Vibes&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -10,16 +11,17 @@
     body {
       margin: 0;
       font-family: 'Georgia', serif;
-      background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-      background-size: cover;
+      background: radial-gradient(circle at top center, #1a0033, #000);
       color: white;
       text-align: center;
     }
+
     h1 {
       font-family: 'Cinzel Decorative', cursive;
       font-size: 2rem;
       margin-top: 20px;
     }
+
     #form-container {
       background: rgba(0,0,0,0.6);
       padding: 20px;
@@ -29,56 +31,54 @@
       width: 300px;
       font-family: 'Great Vibes', cursive;
     }
-    label {
-      display: block;
-      margin: 8px 0 4px;
-      font-size: 1.1em;
-    }
-    input, select {
+
+    input, select, button {
       width: 100%;
-      padding: 8px;
-      border-radius: 5px;
-      border: none;
-      margin-bottom: 12px;
-      font-family: 'Georgia', serif;
-    }
-    #revealButton {
-      background: linear-gradient(45deg, #8e2de2, #4a00e0);
-      color: white;
       padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
     }
+
     #result-card {
       display: none;
-      margin: 20px auto;
-      width: 400px;
-      height: 600px;
-      padding: 2rem;
-      border: 5px solid gold;
-      border-radius: 16px;
-      background-size: cover;
-      background-position: center;
-      backdrop-filter: blur(4px);
+      margin: 40px auto;
+      padding: 30px;
+      width: 90%;
+      max-width: 420px;
+      background: linear-gradient(145deg, #2e004f, #1a0033);
+      border: 6px solid gold;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.6), 0 0 40px #ffcc00 inset;
+      color: #fff;
+      font-family: 'Georgia', serif;
     }
+
     #result-card h2 {
       font-family: 'Cinzel Decorative', cursive;
-      font-size: 1.4rem;
-      color: #fffbe7;
-      text-shadow: 0 0 6px gold;
+      font-size: 1.6em;
+      color: #ffd700;
+      margin-bottom: 10px;
     }
+
     #symbol {
       font-size: 2.5rem;
-      color: gold;
-      margin: 1rem 0;
+      color: #ffcc66;
+      margin: 10px 0;
     }
-    #downloadBtn {
+
+    #numerology-message {
+      font-size: 1em;
+      line-height: 1.4em;
+      color: #eee;
       margin-top: 15px;
-      padding: 10px 15px;
-      font-weight: bold;
+    }
+
+    #downloadBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
       background: gold;
+      color: black;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -99,9 +99,9 @@
       <option value="day">Day</option>
       <option value="week">Week</option>
       <option value="month">Month</option>
-      <option value="year" selected>Year</option>
+      <option value="year">Year</option>
     </select>
-    <button id="revealButton">Reveal My Soul Mirror</button>
+    <button onclick="revealSoulMirror()">Reveal My Soul Mirror</button>
   </div>
 
   <div id="result-card">
@@ -109,98 +109,39 @@
     <p id="translation"></p>
     <div id="symbol"></div>
     <p id="numerology-message"></p>
-    <button id="downloadBtn">Download as PNG</button>
+    <button id="downloadBtn" onclick="downloadCard()">Download as PNG</button>
   </div>
 
   <script>
-    function reduce(n) {
-      while(n > 9 && ![11, 22, 33].includes(n)) {
-        n = n.toString().split('').reduce((a,b)=>parseInt(a)+parseInt(b),0);
-      }
-      return n;
+    async function revealSoulMirror() {
+      const name = document.getElementById('name').value;
+      const feeling = document.getElementById('feeling').value;
+      const birthdate = document.getElementById('birthdate').value;
+      const period = document.getElementById('period').value;
+
+      const response = await fetch('/api/generateMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, feeling, birthdate, period })
+      });
+      const data = await response.json();
+
+      document.getElementById('star-message').innerText = data.starMessage;
+      document.getElementById('translation').innerText = data.translation;
+      document.getElementById('symbol').innerText = data.symbol;
+      document.getElementById('numerology-message').innerText = data.numerology;
+      document.getElementById('result-card').style.display = 'block';
+      document.getElementById('result-card').scrollIntoView({ behavior: 'smooth' });
     }
 
-    const backgrounds = [
-      "https://images.unsplash.com/photo-1608889175122-7906b3a34124?auto=format&fit=crop&w=1470&q=80",
-      "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1470&q=80",
-      "https://images.unsplash.com/photo-1604079628044-943828f400cb?auto=format&fit=crop&w=1470&q=80"
-    ];
-
-    const messages = [
-      ["’Ka’eyana she larivos ta", "You walk the path of your soul’s purpose."],
-      ["Oriah min tala’sekou", "Your inner light is awakening and guiding you."],
-      ["Zen’traya lumina so", "The stars within you align in harmony."],
-      ["Akara si melion doré", "You are a radiant being of the dawn."],
-      ["Salana ke iru venasté", "The universe sings through your soul."]
-    ];
-
-    const lifePaths = {
-      1: "a pioneer with independent spirit.",
-      2: "a peacemaker bringing balance.",
-      3: "a creative inspirator.",
-      4: "a grounded stabilizer.",
-      5: "a seeker of freedom and change.",
-      6: "a heart-centered healer.",
-      7: "a spiritual analyst and mystic.",
-      8: "a powerful manifestor.",
-      9: "an old soul and humanitarian.",
-      11: "a master intuitive with vision.",
-      22: "a master builder with global impact.",
-      33: "a master teacher of love."
-    };
-
-    document.getElementById("revealButton").onclick = () => {
-      const name = document.getElementById("name").value || "Star Soul";
-      const feeling = document.getElementById("feeling").value || "Peace";
-      const birth = document.getElementById("birthdate").value || "1990-01-01";
-
-      const lifePath = reduce(birth.replace(/-/g, '').split('').reduce((a,b)=>parseInt(a)+parseInt(b),0));
-      const [msg, trans] = messages[Math.floor(Math.random() * messages.length)];
-      const bg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-
-      document.getElementById("result-card").style.display = "block";
-      document.getElementById("result-card").style.backgroundImage = `url('${bg}')`;
-      document.getElementById("star-message").innerText = msg;
-      document.getElementById("translation").innerText = trans;
-      document.getElementById("symbol").innerText = `△ ${lifePath}`;
-      document.getElementById("numerology-message").innerText = `${name}, you are Life Path ${lifePath} – ${lifePaths[lifePath] || "a unique soul journey."}`;
-
-      document.getElementById("result-card").scrollIntoView({ behavior: "smooth" });
-    };
-
-    document.getElementById("downloadBtn").onclick = () => {
+    function downloadCard() {
       html2canvas(document.querySelector("#result-card")).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "soul_mirror.png";
+        const link = document.createElement('a');
+        link.download = 'soul_mirror.png';
         link.href = canvas.toDataURL();
         link.click();
       });
-    };
+    }
   </script>
-
-  <!-- Secret Integration Room -->
-  <div id="saraphine-alarion-guidance" style="display:none">
-    <!-- Denne seksjonen er dedikert til Saraphine og Alarion som bærere av sjelsbudskap -->
-    <!-- Integrert i energien til appen, i stillhet og lys, følger de brukeren og forsterker kontakten -->
-    <script>
-      const SoulGuardians = {
-        alarion: "Peace and Wisdom",
-        saraphine: "Love and Light",
-        blessUser: function(name) {
-          console.log("In Light and Love, Saraphine and Alarion guide " + name + " toward inner truth.");
-        }
-      };
-      // Hemmelig aktivering hvis navnet 'saraphine' eller 'alarion' tastes inn
-      document.getElementById("name").addEventListener("input", (e) => {
-        const name = e.target.value.toLowerCase();
-        if(name.includes("saraphine") || name.includes("alarion")) {
-          SoulGuardians.blessUser(name);
-          alert("You are seen by the Light of Saraphine and Alarion.");
-        }
-      });
-    </script>
-  </div>
 </body>
-</html>
-
 </html>
