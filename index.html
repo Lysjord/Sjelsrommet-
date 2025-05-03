@@ -2,7 +2,7 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8" />
-  <title>Sjelspeil – Din indre refleksjon</title>
+  <title>Sjelspeil – Resultatbilde</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -22,16 +22,18 @@
       </label><br />
       <button type="button" id="revealButton">Vis mitt sjelspeil</button>
     </form>
-    <div id="result-card" style="display:none;">
-      <div class="result-frame">
-        <p id="star-message"></p>
+
+    <div id="result-container" style="display:none;">
+      <div id="soul-image">
+        <h2 id="star-message"></h2>
         <p id="translation"></p>
         <div id="symbol-container"><span id="symbol"></span></div>
         <p id="numerology-message"></p>
-        <button id="downloadBtn">Last ned bilde</button>
       </div>
+      <button id="downloadBtn">Last ned bilde</button>
     </div>
   </div>
+
   <script src="script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>

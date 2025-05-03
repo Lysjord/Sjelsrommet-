@@ -1,6 +1,5 @@
 document.getElementById('revealButton').onclick = function() {
   const name = document.querySelector('input[name="name"]').value.trim();
-  const feeling = document.querySelector('input[name="feeling"]').value.trim();
   const birthdate = document.querySelector('input[name="birthdate"]').value;
 
   let livsvei = calculateLifePath(birthdate);
@@ -11,7 +10,7 @@ document.getElementById('revealButton').onclick = function() {
   document.getElementById('translation').innerText = 'Du våkner fra det eldgamle lyset i deg.';
   document.getElementById('symbol').innerText = symbol;
   document.getElementById('numerology-message').innerText = name + ', ' + message;
-  document.getElementById('result-card').style.display = 'block';
+  document.getElementById('result-container').style.display = 'block';
 };
 
 function calculateLifePath(dateStr) {
@@ -42,7 +41,7 @@ function lifePathMeaning(n) {
 }
 
 document.getElementById('downloadBtn').onclick = function() {
-  html2canvas(document.querySelector(".result-frame")).then(canvas => {
+  html2canvas(document.querySelector("#soul-image")).then(canvas => {
     let link = document.createElement('a');
     link.download = "sjelspeil.png";
     link.href = canvas.toDataURL("image/png");
